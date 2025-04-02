@@ -1,0 +1,9 @@
+<h3 class="text-2xl font-bold mt-5">Mostrando: {{ query() }}</h3>
+<hr class="text-gray-300">
+<section class="py-5">
+  @if (gifsByKey().length === 0) {
+  <p class="text-sm text-gray-400">No se encontraron gifs</p>
+  } @else {
+  <gifs-list [gifs]="gifsByKey()" />
+  }
+</section>
