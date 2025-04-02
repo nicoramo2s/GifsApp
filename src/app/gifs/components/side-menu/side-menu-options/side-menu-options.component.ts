@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { GifsService } from 'src/app/gifs/services/gifs.service';
 
 interface MenuOption {
@@ -16,6 +16,7 @@ interface MenuOption {
 })
 export class SideMenuOptionsComponent {
   gifsService = inject(GifsService);
+  router = inject(Router);
 
   menuOptions: Array<MenuOption> = [
     {
@@ -31,4 +32,11 @@ export class SideMenuOptionsComponent {
       route: '/dashboard/search',
     },
   ];
+
+  deleteAndRedirect(key: string, event: MouseEvent) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.gifsService.deleteHistoryGifFromLocalStorage(key);
+    this.router.navigate(['/dashboard/search']);
+  }
 }

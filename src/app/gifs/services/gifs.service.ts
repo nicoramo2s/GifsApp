@@ -20,6 +20,7 @@ function loadFromLocalStorage(): Record<string, Gif[]> {
 })
 export class GifsService {
   private http = inject(HttpClient);
+
   trendingGifs = signal<Gif[]>([]);
   trendingGifsLoading = signal<boolean>(true);
 
@@ -73,5 +74,13 @@ export class GifsService {
 
   getHistoryGifs(query: string): Gif[] {
     return this.searchHistory()[query] ?? [];
+  }
+
+  deleteHistoryGifFromLocalStorage(key: string) {
+    const gifsFromLocalStorage = localStorage.getItem('gifs') ?? '{}';
+    const gifs = JSON.parse(gifsFromLocalStorage);
+    delete gifs[key];
+    localStorage.setItem('gifs', JSON.stringify(gifs));
+    this.searchHistory.set(gifs);
   }
 }
